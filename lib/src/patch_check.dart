@@ -50,6 +50,9 @@ class PatchArtifact {
     required this.downloadUrl,
     this.hashSignature,
     this.uniqueIds,
+    this.resourceNumber,
+    this.configFingerprint,
+    this.hasResourceChanges,
   });
 
   final int number;
@@ -60,6 +63,15 @@ class PatchArtifact {
   /// Device allowlist. Empty / omitted → all devices may download.
   /// Non-empty → **clients** should only download if their id is listed.
   final List<String>? uniqueIds;
+
+  /// Control-plane resource pack number owned by this patch.
+  final int? resourceNumber;
+
+  /// Fingerprint of the full resource inventory for this patch.
+  final String? configFingerprint;
+
+  /// Whether this patch's resource table has any add/update/remove entries.
+  final bool? hasResourceChanges;
 
   factory PatchArtifact.fromJson(Map<String, dynamic> json) {
     final rawIds = json['unique_ids'];
@@ -73,6 +85,9 @@ class PatchArtifact {
       downloadUrl: json['download_url'] as String,
       hashSignature: json['hash_signature'] as String?,
       uniqueIds: uniqueIds,
+      resourceNumber: (json['resource_number'] as num?)?.toInt(),
+      configFingerprint: json['config_fingerprint'] as String?,
+      hasResourceChanges: json['has_resource_changes'] as bool?,
     );
   }
 
@@ -82,6 +97,10 @@ class PatchArtifact {
         'download_url': downloadUrl,
         if (hashSignature != null) 'hash_signature': hashSignature,
         if (uniqueIds != null) 'unique_ids': uniqueIds,
+        if (resourceNumber != null) 'resource_number': resourceNumber,
+        if (configFingerprint != null) 'config_fingerprint': configFingerprint,
+        if (hasResourceChanges != null)
+          'has_resource_changes': hasResourceChanges,
       };
 }
 

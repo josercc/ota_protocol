@@ -1,6 +1,6 @@
 name: ota_protocol
 description: Shorebird-compatible OTA check/events protocol types for Meta Code Push
-version: 0.1.0
+version: 0.1.1
 environment:
   sdk: ^3.5.0
 dependencies:
